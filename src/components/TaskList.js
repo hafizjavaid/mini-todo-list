@@ -1,15 +1,15 @@
-import React, { useContext } from "react";
+import React, {  } from "react";
 import Task from "./Task";
-import { TodoContext } from '../context'
+import { useStore } from '../store/store';
 
 const TaskList = () => {
 
-  const { tasks } = useContext(TodoContext);
+  const state = useStore()[0];
   return (
     <div className="todo-container">
       <ul className="todo-list">
         {
-          tasks.map(task=>{
+          state.filteredTasks.map(task=>{
             return(
               <Task key={task.id} task={task} />
             )

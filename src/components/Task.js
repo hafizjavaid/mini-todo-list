@@ -1,8 +1,22 @@
-import React, { useContext } from "react";
-import { TodoContext } from "../context";
+import React, {  } from "react";
+
+import { useStore } from '../store/store';
 
 const Task = ({ task }) => {
-  const { toggleTodo, deleteTodo } = useContext(TodoContext);
+ 
+  const dispatch = useStore(false)[1];
+
+  const toggleTodo = id => {
+
+    dispatch('TOGGLE_TODO', id);
+
+  }
+  const deleteTodo = id => {
+
+    dispatch('REMOVE_TODO', id);
+
+  }
+  
   return (
     <div className={`todo ${task.checked ? "completed" : ""}`}>
       <li className="todo-item">{task.title}</li>

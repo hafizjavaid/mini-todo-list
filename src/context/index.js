@@ -20,7 +20,7 @@ function TodoContextProvider({ children }) {
 
 
 
-  // Add Task
+  // Add Task (Done)
   const addTask = (title) => {
     setTasks([
       ...tasks,
@@ -32,7 +32,7 @@ function TodoContextProvider({ children }) {
     ]);
   };
 
-  // ToggleTodo
+  // ToggleTodo (Done)
   const toggleTodo = (todoId) => {
     const updatedTodos = tasks.map((todo) => {
       if (todo.id === todoId) {
@@ -43,7 +43,7 @@ function TodoContextProvider({ children }) {
     setTasks([...updatedTodos]);
   };
 
-  //   Delete Todo
+  //   Delete Todo  (Done)
   const deleteTodo = (todoId) => {
     const updatedTodos = tasks.filter((todo) => todo.id !== todoId);
     setTasks([...updatedTodos]);
