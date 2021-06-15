@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
 
 import OptionList from "./option";
-import { useStore } from "../store/store";
+import * as actionTypes from "../store2/actions/actions";
 
 // useStore
-const Form = () => {
-  const dispatch = useStore(false)[1];
+const Form = (props) => {
   const [title, setTitle] = useState("");
   const [status, setStatus] = useState("all");
-
-  console.log(status);
   const options = [
     {
       value: "all",
@@ -25,11 +23,13 @@ const Form = () => {
     },
   ];
   useEffect(() => {
-    dispatch("FILTER_TODOS", status);
-  }, [status, dispatch]);
+    props.onFilterTodos(status);
+    // console.log(props.filteredTasks);
+  }, [status, props]);
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch("ADD_TODO", title);
+    props.onAddTodo(title);
+
     setTitle("");
   };
   return (
@@ -59,4 +59,14 @@ const Form = () => {
   );
 };
 
-export default Form;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onAddTodo: (title) => {
+      dispatch({ type: actionTypes.ADD_TODO, title });
+    },
+    onFilterTodos: (status) => {
+      dispatch({ type: actionTypes.FILTER_TODOS, status });
+    },
+  };
+};
+export default connect(null, mapDispatchToProps)(Form);

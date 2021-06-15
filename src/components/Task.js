@@ -1,33 +1,41 @@
-import React, {  } from "react";
+import React from "react";
+import { connect } from "react-redux";
+import * as actionTypes from "../store2/actions/actions";
 
-import { useStore } from '../store/store';
+const Task = (props) => {
+  console.log(props);
 
-const Task = ({ task }) => {
- 
-  const dispatch = useStore(false)[1];
+  const toggleTodo = (id) => {
+    props.onToggleTodo(id);
+  };
+  const deleteTodo = (id) => {
+    props.onDeleteTodo(id);
+  };
 
-  const toggleTodo = id => {
-
-    dispatch('TOGGLE_TODO', id);
-
-  }
-  const deleteTodo = id => {
-
-    dispatch('REMOVE_TODO', id);
-
-  }
-  
   return (
-    <div className={`todo ${task.checked ? "completed" : ""}`}>
-      <li className="todo-item">{task.title}</li>
-      <button className="complete-btn" onClick={() => toggleTodo(task.id)}>
+    <div className={`todo ${props.task.checked ? "completed" : ""}`}>
+      <li className="todo-item">{props.task.title}</li>
+      <button
+        className="complete-btn"
+        onClick={() => toggleTodo(props.task.id)}
+      >
         <i className="fas fa-check"></i>
       </button>
-      <button className="trash-btn" onClick={() => deleteTodo(task.id)}>
+      <button className="trash-btn" onClick={() => deleteTodo(props.task.id)}>
         <i className="fas fa-trash"></i>
       </button>
     </div>
   );
 };
 
-export default Task;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onDeleteTodo: (id) => {
+      dispatch({ type: actionTypes.REMOVE_TODO, id });
+    },
+    onToggleTodo: (id) => {
+      dispatch({ type: actionTypes.TOGGLE_TODO, id });
+    },
+  };
+};
+export default connect(null, mapDispatchToProps)(Task);

@@ -1,16 +1,18 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
-// import { TodoContextProvider } from './context'
-import configureStore from './store/tasks-store';
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./App";
+import { createStore } from "redux";
+import { Provider } from "react-redux";
 
-configureStore();
+import reducer from "./store2/reducers/reducer";
+const store = createStore(reducer);
 
 ReactDOM.render(
   <React.StrictMode>
-    {/* <TodoContextProvider> */}
-    <App />
-    {/* </TodoContextProvider> */}
+  
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
